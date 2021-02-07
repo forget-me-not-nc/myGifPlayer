@@ -41,7 +41,7 @@ DWORD timerDelay = 200;  //--for changing timer delay--
 DWORD volume = 100;
 HANDLE paintingThreadHandle = NULL;
 HANDLE musicThreadHandle = NULL;
-BOOL threadExitFlag = FALSE;
+unsigned int threadExitFlag = 0;
 HDC _hdc = NULL;
 
 //--------------------------
@@ -353,7 +353,7 @@ unsigned __stdcall _glitch_painting_thread(void* param)
 
 	while (TRUE)
 	{
-		if (threadExitFlag) return 0;
+		if ((BOOL)threadExitFlag) return 0;
 
 		time = rand() % 8000 + 3000;
 
@@ -482,53 +482,53 @@ unsigned __stdcall _bckgrnd_music_thread(void* param)
 
 	while (TRUE)
 	{
-		if (threadExitFlag) return 0;
+		if ((BOOL)threadExitFlag) return 0;
 
 		switch (songState)
 		{
-		case SONG_STATES::LOAD:
-		{
-			LoadSongFromFileExplorer();
+			case SONG_STATES::LOAD:
+			{
+				LoadSongFromFileExplorer();
 
-			mciSendString(L"close bckgSound", 0, 0, 0);
+				mciSendString(L"close bckgSound", 0, 0, 0);
 
-			PlaySong(FALSE);
+				PlaySong(FALSE);
 
-			songState = -1;
+				songState = -1;
 
-			break;
-		}
+				break;
+			}
 
-		case SONG_STATES::PLAY:
-		{
-			PlaySong(TRUE);
+			case SONG_STATES::PLAY:
+			{
+				PlaySong(TRUE);
 
-			songState = -1;
+				songState = -1;
 
-			break;
-		}
+				break;
+			}
 
-		case SONG_STATES::SKIP:
-		{
-			mciSendString(L"close bckgSound", 0, 0, 0);
+			case SONG_STATES::SKIP:
+			{
+				mciSendString(L"close bckgSound", 0, 0, 0);
 
-			FindNextSong();
+				FindNextSong();
 
-			songState = SONG_STATES::PLAY;
+				songState = SONG_STATES::PLAY;
 
-			break;
-		}
+				break;
+			}
 
-		case SONG_STATES::PAUSE:
-		{
-			mciSendString(L"pause bckgSound", 0, 0, 0);
+			case SONG_STATES::PAUSE:
+			{
+				mciSendString(L"pause bckgSound", 0, 0, 0);
 
-			songState = -1;
+				songState = -1;
 
-			break;
-		}
+				break;
+			}
 
-		default: break;
+			default: break;
 		}
 	}
 

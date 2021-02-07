@@ -274,7 +274,7 @@ LRESULT CALLBACK WinProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			KillTimer(hWnd, WM_TIMER);
 
 			//--close threads--
-			threadExitFlag = TRUE;
+			InterlockedExchangeAdd(&threadExitFlag, 1);
 
 			DWORD paintingThreadHandleExitCode = 0;
 			DWORD musicThreadHandleExitCode = 0;
@@ -303,7 +303,6 @@ LRESULT CALLBACK WinProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 				timerDelay = (DWORD)SendMessage(GetDlgItem(hWnd, TRACKBAR_ID), TBM_GETPOS, 0, 0);
 
 				SetTimer(hWnd, TIMER_ID, timerDelay, NULL);
-				waveOutSetVolume(NULL, MAKELONG(timerDelay, timerDelay));
 
 				SetRicheditTxt(GetDlgItem(hWnd, RICHEDIT_ID));
 			}
