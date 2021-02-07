@@ -146,7 +146,6 @@
     <ClCompile Include="MainWindow.cpp">
       <LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">stdcpplatest</LanguageStandard>
     </ClCompile>
-    <ClCompile Include="SecondaryMethods.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SecondaryMethods.h" />

@@ -7,7 +7,6 @@
 #define VOLUMETRACKBAR_ID 668
 #define RICHEDIT_ID 669
 #define WRITESPACE_ID 670
-#define TIMER_ID 228
 #define ST_TRACKBARTXT 998
 #define ST_MAINTXT	999
 #define SKIPSONG_ID	111
@@ -429,5 +428,7 @@ HWND CreateVolumeTrackbar(HWND hwndParent)
 	SendMessage(hTrackbar, TBM_SETPAGESIZE, 0, (LPARAM)20);
 	SendMessage(hTrackbar, TBM_SETSEL, FALSE, (LPARAM)MAKELONG(20, 5000));
 	SendMessage(hTrackbar, TBM_SETPOS, (WPARAM)TRUE, (LPARAM)volume);
+
+	return hTrackbar;
 }
 
